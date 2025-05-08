@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_btn_lista_masini"
+        android:title="Lista vehicule disponibille"
+        android:icon="@drawable/transport_10913127"/>
+</menu>

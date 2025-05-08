@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CarSharing App</string>
+    <string name="navigation_drawer_open">Deschide meniul</string>
+    <string name="navigation_drawer_close">Închide meniul</string>
+</resources>
