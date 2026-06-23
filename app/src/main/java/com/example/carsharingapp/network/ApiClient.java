@@ -16,4 +16,9 @@ public class ApiClient {
         }
         return retrofit;
     }
+
+    public static CursaApi getCursaApi() {
+        return getClient().create(CursaApi.class);
+    }
+
 }

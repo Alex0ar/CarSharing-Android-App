@@ -1,5 +1,6 @@
 package com.example.carsharingapp;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -28,11 +29,16 @@ public class ListaVehiculeActivity extends AppCompatActivity {
     private VehiculAdapter adapter;
     private List<Vehicul> listaVehicule = new ArrayList<>();
 
+    // Locația de referință - București
+    private final double latRef = 44.4268;
+    private final double lngRef = 26.1025;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lista_vehicule);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -41,8 +47,6 @@ public class ListaVehiculeActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewVehicule);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new VehiculAdapter(listaVehicule);
-        recyclerView.setAdapter(adapter);
 
         VehiculApi api = ApiClient.getClient().create(VehiculApi.class);
         api.getVehicule().enqueue(new Callback<List<Vehicul>>() {
@@ -51,12 +55,21 @@ public class ListaVehiculeActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     listaVehicule.clear();
                     listaVehicule.addAll(response.body());
-                    adapter.notifyDataSetChanged();
 
-                    Log.e("titlu", "afisarea tuturor vehiculelor:");
-                    for(var el:listaVehicule){
-                        Log.e("vehicul", el.toString());
-                    }
+                    // Sortează vehiculele după distanța față de locația fixă
+                    listaVehicule.sort((v1, v2) -> {
+                        float[] res1 = new float[1];
+                        float[] res2 = new float[1];
+
+                        Location.distanceBetween(latRef, lngRef, v1.getLatitudine(), v1.getLongitudine(), res1);
+                        Location.distanceBetween(latRef, lngRef, v2.getLatitudine(), v2.getLongitudine(), res2);
+
+                        return Float.compare(res1[0], res2[0]);
+                    });
+
+                    // Creează adapterul după sortare
+                    adapter = new VehiculAdapter(listaVehicule, ListaVehiculeActivity.this, latRef, lngRef);
+                    recyclerView.setAdapter(adapter);
                 }
             }
 

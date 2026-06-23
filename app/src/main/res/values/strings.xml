@@ -2,4 +2,12 @@
     <string name="app_name">CarSharing App</string>
     <string name="navigation_drawer_open">Deschide meniul</string>
     <string name="navigation_drawer_close">Închide meniul</string>
+    <string name="verificari_vehicul_text">
+        Verifică următoarele înainte de a porni la drum:\n
+        ✔ Luminile față/spate\n
+        ✔ Oglinzile laterale și interioare\n
+        ✔ Centurile de siguranță\n
+        ✔ Nivelul de combustibil / baterie\n
+        ✔ Presiunea în anvelope
+    </string>
 </resources>
