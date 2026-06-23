@@ -2,4 +2,6 @@
 app details will be provided soon
 
 # Here are some app screenshots
-/* <img width="700" alt="image" src="screenshots/home.png" /> */
+<img width="300" alt="image" src="img/1.jpg" />
+<img width="300" alt="image" src="img/2.jpg" />
+
